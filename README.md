@@ -45,6 +45,25 @@ Thus, giving Nim, the speed of C.
     {.compile: "funcs.c"}
 
     # Bindings for our C Functions.
-    proc foo* : void {.importc:"foo", header:"funcs.h"}
-    proc bar* : void {.importc:"bar", header:"funcs.h"}
+    proc foo* : void {.importc: "foo", header: "funcs.h"}
+    proc bar* : void {.importc: "bar", header: "funcs.h"}
     ```
+    1. `{.compile: "file.c"}` > Tells the Nim compiler to include this file during compilation.                 
+
+    2. `{.importc: "func", header: "file.h"}` > Fetches the function itself. Assigning it to a procedure makes it usable in your Nim files.
+
+3. Now, you can simply invoke those procedures like any other Nim procedure/function!
+   
+    ```nim
+    # Fetch bindings
+    import binds
+
+    # Run Code.
+    if isMainModule:
+        foo();bar()
+    ```
+
+4. Compile using:
+   ```powershell
+   nim --run -f c main.nim
+   ```
