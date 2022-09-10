@@ -3,4 +3,5 @@ import binds
 
 # Run Code.
 if isMainModule:
-    foo();bar()
+    foo()
+    bar("Hello from Nim!")

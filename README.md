@@ -19,21 +19,23 @@ Thus, giving Nim, the speed of C.
     #pragma once
     #include <stdio.h>
 
-    // Dummy Functions
+    // Prototypes
     void foo();
-    void bar();
+    void bar(char *input);
     ```
 
     > **`funcs.c`**
     ```c
     #include "funcs.h"
 
-    void foo() {
-        printf("Function -> Foo\n");
+    void foo()
+    {
+        printf("No arguments passed from Nim > Hello from C!\n");
     }
 
-    void bar() {
-        printf("Function -> Bar\n");
+    void bar(char *input)
+    {
+        printf("Argument passed from Nim > %s\n", input);
     }
     ```
 
@@ -46,7 +48,7 @@ Thus, giving Nim, the speed of C.
 
     # Bindings for our C Functions.
     proc foo* : void {.importc: "foo", header: "funcs.h"}
-    proc bar* : void {.importc: "bar", header: "funcs.h"}
+    proc bar*(input: cstring) : void {.importc: "bar", header: "funcs.h"}
     ```
     1. `{.compile: "file.c"}` > Tells the Nim compiler to include this file during compilation.                 
 
@@ -60,10 +62,17 @@ Thus, giving Nim, the speed of C.
 
     # Run Code.
     if isMainModule:
-        foo();bar()
+        foo() # -> void foo()
+        bar("Hello from Nim!") # -> void bar(char *input)
     ```
 
 4. Compile using:
    ```powershell
    nim --run -f c main.nim
    ```
+
+5. Output
+    ```
+    No arguments passed from Nim > Hello from C!
+    Argument passed from Nim > Hello from Nim!
+    ```

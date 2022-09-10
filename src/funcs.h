@@ -1,6 +1,6 @@
 #pragma once
 #include <stdio.h>
 
-// Dummy Functions
+// Prototypes
 void foo();
-void bar();
+void bar(char* input);
